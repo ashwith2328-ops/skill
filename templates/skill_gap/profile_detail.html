@@ -1,0 +1,35 @@
+{% extends 'skill_gap/base.html' %}
+
+{% block title %}{{ profile.name }} — Skill Gap{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <a href="{% url 'skill_gap:profiles_list' %}" class="back-link">← Profiles</a>
+        <h1>{{ profile.name }}</h1>
+        {% if profile.email %}<p class="meta">{{ profile.email }}</p>{% endif %}
+        <a href="{% url 'skill_gap:analyze' %}" class="btn btn-primary">Analyze gap</a>
+    </div>
+</section>
+
+<section class="profile-detail">
+    <div class="container">
+        <div class="card">
+            <h2>Your skills</h2>
+            {% if user_skills %}
+            <ul class="skills-list">
+                {% for us in user_skills %}
+                <li>
+                    <strong>{{ us.skill.name }}</strong>
+                    <span class="proficiency">{{ us.proficiency }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            <p class="hint">To add or edit skills, use the <a href="/admin/">Django admin</a> for now.</p>
+            {% else %}
+            <p class="empty-state">No skills added yet. Add skills via the <a href="/admin/">Django admin</a> (User skills under User profiles).</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

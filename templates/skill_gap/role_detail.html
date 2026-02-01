@@ -1,0 +1,41 @@
+{% extends 'skill_gap/base.html' %}
+
+{% block title %}{{ role.title }} — Skill Gap{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <a href="{% url 'skill_gap:roles_list' %}" class="back-link">← Roles</a>
+        <h1>{{ role.title }}</h1>
+        {% if role.company_or_domain %}<p class="meta">{{ role.company_or_domain }}</p>{% endif %}
+        <a href="{% url 'skill_gap:analyze' %}?role={{ role.pk }}" class="btn btn-primary">Analyze my gap for this role</a>
+    </div>
+</section>
+
+<section class="role-detail">
+    <div class="container">
+        {% if role.description %}
+        <div class="card description-card">
+            <h2>Description</h2>
+            <p>{{ role.description }}</p>
+        </div>
+        {% endif %}
+        <div class="card">
+            <h2>Required skills</h2>
+            {% if requirements %}
+            <ul class="requirements-list">
+                {% for req in requirements %}
+                <li>
+                    <strong>{{ req.skill.name }}</strong>
+                    <span class="proficiency">{{ req.proficiency }}</span>
+                    {% if req.is_mandatory %}<span class="badge mandatory">Required</span>{% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="empty-state">No skills defined for this role yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

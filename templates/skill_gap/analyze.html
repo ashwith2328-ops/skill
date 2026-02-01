@@ -1,0 +1,74 @@
+{% extends 'skill_gap/base.html' %}
+
+{% block title %}Analyze — Skill Gap{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Skill Gap Analysis</h1>
+        <p>Select a placement role and your profile to see where you stand.</p>
+    </div>
+</section>
+
+<section class="analyze-form-section">
+    <div class="container">
+        <form method="get" action="{% url 'skill_gap:analyze' %}" class="analyze-form card">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_role">Placement role</label>
+                    {{ form.role }}
+                </div>
+                <div class="form-group">
+                    <label for="id_profile">Your profile</label>
+                    {{ form.profile }}
+                </div>
+                <button type="submit" class="btn btn-primary">Analyze</button>
+            </div>
+        </form>
+        <p class="hint"><a href="{% url 'skill_gap:profile_create' %}">Create a profile</a> and add your skills to compare against the role.</p>
+    </div>
+</section>
+
+{% if role %}
+<section class="gap-results">
+    <div class="container">
+        <h2>{{ role.title }}{% if role.company_or_domain %} — {{ role.company_or_domain }}{% endif %}</h2>
+        {% if gap_data %}
+        <div class="gap-table-wrap card">
+            <table class="gap-table">
+                <thead>
+                    <tr>
+                        <th>Skill</th>
+                        <th>Required</th>
+                        <th>Your level</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in gap_data %}
+                    <tr class="gap-row status-{{ row.status }}">
+                        <td>
+                            {{ row.skill.name }}
+                            {% if row.is_mandatory %}<span class="badge mandatory">Required</span>{% endif %}
+                        </td>
+                        <td>{{ row.required_proficiency|capfirst }}</td>
+                        <td>{{ row.your_proficiency }}</td>
+                        <td>
+                            {% if row.status == 'met' %}
+                                <span class="status-badge met">Met</span>
+                            {% else %}
+                                <span class="status-badge gap">Gap</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="empty-state">This role has no skill requirements defined yet, or no profile was selected. Add requirements in admin or select a profile.</p>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+{% endblock %}
