@@ -1,0 +1,31 @@
+{% extends 'skill_gap/base.html' %}
+
+{% block title %}Create profile — Skill Gap{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <a href="{% url 'skill_gap:profiles_list' %}" class="back-link">← Profiles</a>
+        <h1>{{ title }}</h1>
+    </div>
+</section>
+
+<section class="form-section">
+    <div class="container">
+        <form method="post" class="card profile-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_name">Name</label>
+                {{ form.name }}
+                {{ form.name.errors }}
+            </div>
+            <div class="form-group">
+                <label for="id_email">Email</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

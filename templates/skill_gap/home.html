@@ -1,0 +1,50 @@
+{% extends 'skill_gap/base.html' %}
+{% load static %}
+
+{% block title %}Home — Placement-Oriented Skill Gap Analyzer{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <h1 class="hero-title">Placement-Oriented<br>Skill Gap Analyzer</h1>
+        <p class="hero-subtitle">Compare your skills with placement and job role requirements. Identify gaps and focus on what matters.</p>
+        <a href="{% url 'skill_gap:analyze' %}" class="btn btn-primary">Analyze Your Gaps</a>
+    </div>
+</section>
+
+<section class="stats">
+    <div class="container stats-grid">
+        <div class="stat-card">
+            <span class="stat-number">{{ roles_count }}</span>
+            <span class="stat-label">Placement Roles</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">{{ skills_count }}</span>
+            <span class="stat-label">Skills in Catalog</span>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="container">
+        <h2 class="section-title">How it works</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-num">1</span>
+                <h3>Choose a role</h3>
+                <p>Pick a placement or job role you’re targeting.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-num">2</span>
+                <h3>Add your skills</h3>
+                <p>Create a profile and add your current skills and proficiency levels.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-num">3</span>
+                <h3>See the gap</h3>
+                <p>Get a clear view of what’s required vs what you have, and what to learn next.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

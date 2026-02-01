@@ -1,0 +1,33 @@
+{% extends 'skill_gap/base.html' %}
+
+{% block title %}Profiles — Skill Gap{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Your profiles</h1>
+        <p>Manage profiles and their skills. <a href="{% url 'skill_gap:profile_create' %}">Create a profile</a> to run gap analysis.</p>
+    </div>
+</section>
+
+<section class="profiles-list">
+    <div class="container">
+        <a href="{% url 'skill_gap:profile_create' %}" class="btn btn-primary">Create profile</a>
+        {% if profiles %}
+        <div class="card-list">
+            {% for profile in profiles %}
+            <a href="{% url 'skill_gap:profile_detail' profile.pk %}" class="card card-link">
+                <h3>{{ profile.name }}</h3>
+                {% if profile.email %}<p class="meta">{{ profile.email }}</p>{% endif %}
+                <p class="skill-count">{{ profile.skills.count }} skill(s)</p>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state card">
+            <p>No profiles yet. Create one to add your skills and run gap analysis.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

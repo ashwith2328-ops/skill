@@ -1,0 +1,43 @@
+{% extends 'skill_gap/base.html' %}
+
+{% block title %}Skills catalog — Skill Gap{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Skills catalog</h1>
+        <p>All skills used in placement roles and profiles.</p>
+    </div>
+</section>
+
+<section class="skills-catalog">
+    <div class="container">
+        {% for category in categories %}
+        <div class="card category-card">
+            <h2>{{ category.name }}</h2>
+            {% if category.description %}<p class="category-desc">{{ category.description }}</p>{% endif %}
+            <ul class="skills-inline">
+                {% for skill in category.skills.all %}
+                <li>{{ skill.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+        {% if uncategorized %}
+        <div class="card category-card">
+            <h2>Other</h2>
+            <ul class="skills-inline">
+                {% for skill in uncategorized %}
+                <li>{{ skill.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        {% if not categories and not uncategorized %}
+        <div class="empty-state card">
+            <p>No skills in the catalog yet. Add skills and categories via the <a href="/admin/">Django admin</a>.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

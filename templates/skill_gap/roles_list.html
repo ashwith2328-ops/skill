@@ -1,0 +1,32 @@
+{% extends 'skill_gap/base.html' %}
+
+{% block title %}Placement Roles — Skill Gap{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Placement Roles</h1>
+        <p>Browse roles and their required skills. Use <a href="{% url 'skill_gap:analyze' %}">Analyze</a> to compare with your profile.</p>
+    </div>
+</section>
+
+<section class="roles-list">
+    <div class="container">
+        {% if roles %}
+        <div class="card-list">
+            {% for role in roles %}
+            <a href="{% url 'skill_gap:role_detail' role.pk %}" class="card card-link">
+                <h3>{{ role.title }}</h3>
+                {% if role.company_or_domain %}<p class="meta">{{ role.company_or_domain }}</p>{% endif %}
+                <p class="skill-count">{{ role.required_skills.count }} skill(s) required</p>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state card">
+            <p>No placement roles yet. Add roles and their skill requirements via the <a href="/admin/">Django admin</a>.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
